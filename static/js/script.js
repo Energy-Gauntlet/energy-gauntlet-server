@@ -4,8 +4,7 @@
     $('#raw').text(res);
     setTimeout(loop, 20);
   }).fail(function(err) {
-    console.error.apply(console, JSON.stringify(arguments));
-    $('#error').text(err);
+    $('#error').text(JSON.stringify(err, undefined, 2));
     setTimeout(loop, 20);
   });
 })();
@@ -16,8 +15,7 @@
     $('#commands').text(res);
     setTimeout(loop, 20);
   }).fail(function(err) {
-    console.error.apply(console, JSON.stringify(arguments));
-    $('#error').text(err);
+    $('#error').text(JSON.stringify(err, undefined, 2));
     setTimeout(loop, 20);
   });
 })();

@@ -14,10 +14,17 @@ class Spark:
 
   def _update_loop(self):
     d = {}
+    try:
+      print self.device.connected
+    except Exception:
+      print False
     if self.device and self.device.connected:
-      for k in self.device.variables.keys():
-        d[k] = getattr(self.device, k)
-      self.raw = d
+      try:
+        for k in self.device.variables.keys():
+          d[k] = getattr(self.device, k)
+        self.raw = d
+      except Exception:
+        self.device = None # assume disconnected
     else:
       self.connect()
       self.raw = { 'connected': False }
