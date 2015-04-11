@@ -4,19 +4,27 @@ from spyrk import SparkCloud
 from commands import *
 import threading
 
-spark_connection = SparkCloud(os.getenv('ACCESS_TOKEN'))
-
 class Spark:
 
-  def __init__(self, spark_connection):
-    self.device = spark_connection.devices['carls']
+  def __init__(self, token):
+    self.token = token
+    self.connect()
+
+  def connect(self):
+    self.connection = SparkCloud(self.token)
+    self.device     = self.connection.devices['carls']
 
   def get_raw(self):
-    return { 'connected': False } if not self.device.connected else {
-      'connected': True,
-      'flex0':     self.device.flex0,
-      'button0':   self.device.button0,
-    }
+    if not self.device.connected:
+      self.connect()
+      return {
+        'connected': False
+      }
+    else:
+      return {
+        'flex_0':   self.device.flex_0,
+        'button_0': self.device.button_0,
+      }
 
   # rake raw and do something to figure out what commands to do
   def get_commands(self):
@@ -30,4 +38,4 @@ class Spark:
       ][(int(time.time()) % 8) / 2]
     ]
 
-spark = Spark(spark_connection)
+spark = Spark(os.getenv('ACCESS_TOKEN'))
