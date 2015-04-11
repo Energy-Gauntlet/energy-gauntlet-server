@@ -19,10 +19,12 @@ class IndexHandler(tornado.web.RequestHandler):
 
 class CommandHandler(tornado.web.RequestHandler):
   def get(self):
+    self.set_header('Content-Type', 'application/json')
     self.write(json_encode(commands))
 
 class RawHandler(tornado.web.RequestHandler):
   def get(self):
+    self.set_header('Content-Type', 'application/json')
     self.write(json_encode(spark.get_raw()))
 
 application = tornado.web.Application([
