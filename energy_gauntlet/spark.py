@@ -9,15 +9,10 @@ class Spark:
   def __init__(self, token):
     self.token  = token
     self.device = None
-    # self.connect()
     self._update_loop()
 
   def _update_loop(self):
     d = {}
-    try:
-      print self.device.connected
-    except Exception:
-      print False
     if self.device and self.device.connected:
       try:
         for k in self.device.variables.keys():
@@ -38,14 +33,6 @@ class Spark:
       pass
 
   def get_raw(self):
-    # d = {}
-    # if self.device and self.device.connected:
-    #   for k in self.device.variables.keys():
-    #     d[k] = getattr(self.device, k)
-    #   self.raw = d
-    # else:
-    #   self.connect()
-    #   self.raw = { 'connected': False }
     return self.raw
 
   # rake raw and do something to figure out what commands to do
