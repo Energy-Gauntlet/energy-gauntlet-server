@@ -11,6 +11,12 @@ class Spark:
     self.id         = deviceId
     self.connect()
 
+  def get_raw(self):
+    if self.connected():
+      return self.raw
+    else:
+      return { 'connected': False }
+
   def connected(self):
     if self.device and self.device.connected:
       return True

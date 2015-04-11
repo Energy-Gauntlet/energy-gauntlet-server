@@ -2,32 +2,32 @@ import threading
 
 class Collection:
 
-  def __init__(self):
-    self.sparks    = set()
+  def __init__(self, interval):
+    self._sparks    = set()
     self.listeners = []
     self.raw       = {}
+    self.interval  = interval
     self._update_loop()
 
   def add_spark(self, spark):
-    self.sparks.add(spark)
+    self._sparks.add(spark)
 
   def connected_sparks(self):
-    return filter(lambda s: s.connected() ,self.sparks)
+    return filter(lambda s: s.connected() ,self._sparks)
 
   def _update_loop(self):
     raw     = {}
-    sparks  = self.connected_sparks()
     threads = []
-    for spark in sparks:
+    for spark in self.connected_sparks():
       threads.append(spark.update)
     for thread in threads:
       thread.join()
     self.raw = {}
-    for spark in sparks:
-      self.raw[spark.id] = spark.raw
+    for spark in self._sparks:
+      self.raw[spark.id] = spark.get_raw()
     for listener in self.listeners:
       listener(self.raw)
-    threading.Thread(target=self._update_loop).start()
+    threading.Timer(self.interval, self._update_loop).start()
 
   def on_update(self, listener):
     self.listeners.append(listener)

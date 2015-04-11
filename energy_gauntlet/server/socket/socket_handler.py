@@ -1,3 +1,4 @@
+from tornado.escape import json_encode
 import tornado.websocket
 
 class SocketHandler(tornado.websocket.WebSocketHandler):
@@ -12,7 +13,7 @@ class SocketHandler(tornado.websocket.WebSocketHandler):
   def send(cls, data):
     for clients in cls.clients:
       try:
-          clients.write_message(data)
+          clients.write_message(json_encode(data))
       except:
         pass
 

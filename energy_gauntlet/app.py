@@ -1,12 +1,28 @@
 import os
+import time
 import tornado.web
 from server import handlers, RawSocketHandler, CommandSocketHandler
 from spark import Collection, Spark
+from commands import *
 
-sparks = Collection()
+sparks = Collection(0.2)
 
 sparks.add_spark(Spark(os.getenv('ACCESS_TOKEN'), 'carls'))
 
+def testing_commands_generator():
+  return [
+    [
+      PoleUp(),
+      PoleStop(),
+      PoleDown(),
+      PoleStop()
+    ][(int(time.time()) % 8) / 2]
+  ]
+
+def get_commands(raw):
+  CommandSocketHandler.send(testing_commands_generator())
+
 sparks.on_update(RawSocketHandler.send)
+sparks.on_update(get_commands)
 
 application = tornado.web.Application(handlers)
