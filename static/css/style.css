@@ -6,7 +6,6 @@ html, body {
 .block {
   width: 40%;
   margin: 20px 2.5%;
-  padding: 20px;
   float: left;
   height: 87.5%;
   background: gray;
@@ -18,9 +17,19 @@ html, body {
 }
 
 .half {
-  height: 40%;
+  height: 45%;
 }
 
 .error {
   color: red;
+}
+
+.header {
+  padding: 20px 20px 10px 20px;
+  border-bottom: 2px solid #272727;
+  background: #1a1a1a;
+}
+
+.body {
+  padding: 10px 20px 20px 20px;
 }
