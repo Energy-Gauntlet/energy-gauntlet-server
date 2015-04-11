@@ -1,0 +1,12 @@
+html, body {
+  height: 100%;
+}
+
+.block {
+  width: 40%;
+  margin: 20px 2.5%;
+  padding: 20px;
+  float: left;
+  height: 80%;
+  background: gray;
+}
