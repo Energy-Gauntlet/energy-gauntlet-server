@@ -7,7 +7,10 @@ from commands import *
 
 sparks = Collection(0.2)
 
-sparks.add_spark(Spark(os.getenv('ACCESS_TOKEN'), 'carls'))
+devices = os.getenv('DEVICES').split('|')
+for device in devices:
+  token = os.getenv(device.upper() + '_TOKEN')
+  sparks.add_spark(Spark(token, device))
 
 def testing_commands_generator():
   return [
