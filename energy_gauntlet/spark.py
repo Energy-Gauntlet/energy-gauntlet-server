@@ -7,6 +7,7 @@ import threading
 class Spark:
 
   def __init__(self, token):
+    self.on_update_listeners = set()
     self.token  = token
     self.device = None
     self._update_loop()
@@ -23,7 +24,15 @@ class Spark:
     else:
       self.connect()
       self.raw = { 'connected': False }
+    for listener in self.on_update_listeners:
+      try:
+        listener(self.raw)
+      except:
+        pass
     threading.Timer(0.5, self._update_loop).start()
+
+  def on_update(self, listener):
+    self.on_update_listeners.add(listener)
 
   def connect(self):
     try:

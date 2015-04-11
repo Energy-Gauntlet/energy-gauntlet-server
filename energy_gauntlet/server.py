@@ -29,35 +29,42 @@ class RawHandler(tornado.web.RequestHandler):
     self.write(json_encode(spark.get_raw()))
 
 class SocketHandler(tornado.websocket.WebSocketHandler):
-  clients = set()
 
   def open(self):
-    ChatSocketHandler.waiters.add(self)
+    RawSocketHandler.clients.add(self)
 
   def on_close(self):
-    ChatSocketHandler.waiters.remove(self)
+    RawSocketHandler.clients.remove(self)
 
 class RawSocketHandler(SocketHandler):
-  def send_raw(self, data):
-    for waiter in cls.waiters:
+  clients = set()
+
+  @classmethod
+  def send_raw(cls, data):
+    for clients in cls.clients:
       try:
-          waiter.write_message(data)
+          clients.write_message(data)
       except:
         pass
 
 class CommandsSocketHandler(SocketHandler):
-  def send_commands(self, data):
-    for waiter in cls.waiters:
+  clients = set()
+
+  @classmethod
+  def send_commands(cls, data):
+    for clients in cls.clients:
       try:
-          waiter.write_message(data)
+          clients.write_message(data)
       except:
         pass
+
+spark.on_update(RawSocketHandler.send_raw)
 
 application = tornado.web.Application([
   (r"/", IndexHandler),
   (r"/raw", RawHandler),
   (r"/what-should-i-do", CommandHandler),
-  (r'/(.*)', tornado.web.StaticFileHandler, {'path': config.static_path }),
   (r'/ws/raw', RawSocketHandler),
   (r'/ws/commands', CommandsSocketHandler),
+  (r'/(.*)', tornado.web.StaticFileHandler, {'path': config.static_path }),
 ])
