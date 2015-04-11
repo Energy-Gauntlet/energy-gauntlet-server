@@ -1,3 +1,4 @@
+import time
 import os
 from spyrk import SparkCloud
 from commands import *
@@ -17,7 +18,13 @@ class Spark:
 
   # rake raw and do something to figure out what commands to do
   def get_commands(self):
-    raw = self.get_raw()
-    return [Drive()]
+    return [
+      [
+        PoleUp(),
+        PoleStop(),
+        PoleDown(),
+        PoleStop()
+      ][(int(time.time()) % 8) / 2]
+    ]
 
 spark = Spark(spark_client)
