@@ -8,11 +8,19 @@ html, body {
   margin: 20px 2.5%;
   padding: 20px;
   float: left;
-  height: 80%;
+  height: 87.5%;
   background: gray;
   border: 2px solid #272727;
   color: #efefef;
   font-family: monospace;
   font-size: 24px;
   background: #111;
+}
+
+.half {
+  height: 40%;
+}
+
+.error {
+  color: red;
 }

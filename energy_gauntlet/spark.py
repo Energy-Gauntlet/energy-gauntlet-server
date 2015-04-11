@@ -16,7 +16,6 @@ class Spark:
       'connected': True,
       'flex0':     self.device.flex0,
       'button0':   self.device.button0,
-      'flex1':     self.device.analogread('A0')
     }
 
   # rake raw and do something to figure out what commands to do
