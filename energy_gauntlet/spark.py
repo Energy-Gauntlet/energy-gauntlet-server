@@ -11,8 +11,11 @@ class Spark:
     self.connect()
 
   def connect(self):
-    self.connection = SparkCloud(self.token)
-    self.device     = self.connection.devices['carls']
+    try:
+      self.connection = SparkCloud(self.token)
+      self.device     = self.connection.devices['carls']
+    except Exception:
+      pass
 
   def get_raw(self):
     if not self.device.connected:
@@ -21,10 +24,10 @@ class Spark:
         'connected': False
       }
     else:
-      return {
-        'flex_0':   self.device.flex_0,
-        'button_0': self.device.button_0,
-      }
+      d = {}
+      for k in self.device.variables.keys():
+        d[k] = getattr(self.device, k)
+      return d
 
   # rake raw and do something to figure out what commands to do
   def get_commands(self):

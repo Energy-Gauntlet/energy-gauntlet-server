@@ -9,7 +9,7 @@ commands = []
 def spark_poll_loop():
   global commands
   commands = spark.get_commands()
-  threading.Timer(0.25, spark_poll_loop).start()
+  threading.Timer(0.5, spark_poll_loop).start()
 spark_poll_loop()
 
 class IndexHandler(tornado.web.RequestHandler):
