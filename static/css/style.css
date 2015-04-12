@@ -5,9 +5,9 @@ html, body {
 
 .block {
   width: 40%;
-  margin: 20px 2.5%;
+  margin: 2.5% 0 0 7.5%;
   float: left;
-  height: 87.5%;
+  height: 90%;
   background: gray;
   border: 2px solid #272727;
   color: #efefef;
@@ -17,7 +17,12 @@ html, body {
 }
 
 .half {
-  height: 45%;
+  height: 42.5%;
+}
+
+.right {
+  float: right;
+  margin: 2.5% 7.5% 0 0;
 }
 
 .error {
