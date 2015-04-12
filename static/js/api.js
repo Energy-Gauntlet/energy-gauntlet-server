@@ -8,21 +8,17 @@ var makeWsListener = function(path, selector) {
   var ws = new WebSocket('ws://' + location.host + path);
 
   var last = 0;
-  var diff = 0;
 
   var status = undefined;
 
   ws.onmessage = function(event) {
-    var now  = window.performance.now();
+    var now  = Date.now();
     var data = JSON.parse(event.data);
-    diff     = (data.latency || 0) + now - last - (data.interval || 0);
+    var diff = ((now - last) + data.latency);
     last     = now;
-    if (diff < 0) {
-      console.log(diff, last, data.interval, data.latency)
-    }
     var str  = JSON.stringify(data, undefined, 2);
     $(selector).text(str);
-    $('.latency' + selector.replace('#', '-')).text(diff.toFixed(2));
+    $('.latency' + selector.replace('#', '-')).text(diff.toFixed());
     status = true;
   };
 
