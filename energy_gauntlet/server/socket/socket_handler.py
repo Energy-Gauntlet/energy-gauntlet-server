@@ -3,6 +3,9 @@ import tornado.websocket
 
 class SocketHandler(tornado.websocket.WebSocketHandler):
 
+  def check_origin(self, origin):
+    return True
+
   def open(self):
     self.__class__.clients.add(self)
 
