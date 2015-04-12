@@ -2,10 +2,8 @@ import os
 import time
 import tornado.web
 from server import handlers, RawSocketHandler, CommandSocketHandler
-from spark import Collection, Spark
+from spark import Collection, Spark, sparks
 from commands import *
-
-sparks = Collection(0.2)
 
 devices = os.getenv('DEVICES', '').split(',')
 for device in devices:
