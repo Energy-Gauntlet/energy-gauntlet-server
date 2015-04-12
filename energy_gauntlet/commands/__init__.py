@@ -10,7 +10,7 @@ def factory(cmd_type, params = {}):
 Drive         = factory('drive',         { 'forwardBack': 0, 'leftRight': 0 })
 VariableDrive = factory('variableDrive', { 'forwardBack': 0, 'leftRight': 0 })
 
-TurnByDegrees = factory('furnByDegrees', { 'theDegrees': 0 })
+TurnByDegrees = factory('turnByDegrees', { 'theDegrees': 0 })
 
 PoleUp        = factory('poleUp')
 PoleDown      = factory('poleDown')
