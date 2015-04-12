@@ -4,7 +4,7 @@ import threading
 class Collection:
 
   def __init__(self, interval):
-    self._sparks    = set()
+    self._sparks   = set()
     self.listeners = []
     self.raw       = {}
     self.interval  = interval

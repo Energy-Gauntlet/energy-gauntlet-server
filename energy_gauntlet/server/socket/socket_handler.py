@@ -1,5 +1,6 @@
 from tornado.escape import json_encode
 import tornado.websocket
+import threading
 
 class SocketHandler(tornado.websocket.WebSocketHandler):
 
@@ -14,11 +15,16 @@ class SocketHandler(tornado.websocket.WebSocketHandler):
 
   @classmethod
   def send(cls, data):
-    for clients in cls.clients:
-      try:
-          clients.write_message(json_encode(data))
-      except:
-        pass
+    to_send = json_encode(data)
+    try:
+      for client in cls.clients:
+        try:
+          # threading.Thread(target=client.write_message, args=(to_send,))
+          client.write_message(to_send)
+        except:
+          pass
+    except:
+      pass
 
   @classmethod
   def new(cls, name):
