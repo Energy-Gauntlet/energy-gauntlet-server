@@ -31,10 +31,6 @@ class Spark:
 
   def connect(self):
     self.device = self.connection.devices[self.id]
-    # threading.Thread(target=self._connect)
-
-  def _connect(self):
-    self.device = self.connection.devices[self.id]
 
   def _update(self):
     try:
