@@ -1,17 +1,30 @@
 import time
 from commands import *
 
+speed_threshold = 0.1
+
 # CALIBRATION
 # ---------------
-flex0_low = 1200.
-flex0_high = 2000.
+flex0_low = 1440.
+flex0_high = 1900.
 
-flex1_low = 1200.
-flex1_high = 2000.
+flex1_low = 1700.
+flex1_high = 2100.
 # ----------------
+
+def fix_ranges(flex, low, high):
+  if flex > high:
+    flex = high
+  elif flex < low:
+    flex = low
+  return flex
 
 def speed_turn(flex0, flex1):
   # normalize
+
+  flex0 = fix_ranges(flex0, flex0_low, flex0_high)
+  flex1 = fix_ranges(flex1, flex1_low, flex1_high)
+
   flex0 = (flex0 - flex0_low) / (flex0_high - flex0_low)
   flex1 = (flex1 - flex1_low) / (flex1_high - flex1_low)
 
@@ -37,14 +50,11 @@ class Commander():
 
     if right_button > 0:
       speed, turn = speed_turn(flex0, flex1)
+      
+      if speed < speed_threshold:
+        return
 
-    self.commands = [
-      [
-        PoleUp(),
-        PoleStop(),
-        PoleDown(),
-        PoleStop()
-      ][(int(time.time()) % 8) / 2]
-    ]
+      self.commands = [variableDrive({ 'forwardBack': speed, 
+                                     'leftRight': turn })]
 
 commander = Commander()
