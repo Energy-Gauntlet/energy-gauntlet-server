@@ -1,7 +1,7 @@
 import time
 from commands import *
 
-speed_threshold = 0.1
+speed_threshold = 0.25
 
 # CALIBRATION
 # ---------------
@@ -25,17 +25,16 @@ def speed_turn(flex0, flex1):
   flex0 = fix_ranges(flex0, flex0_low, flex0_high)
   flex1 = fix_ranges(flex1, flex1_low, flex1_high)
 
-  flex0 = (flex0 - flex0_low) / (flex0_high - flex0_low)
-  flex1 = (flex1 - flex1_low) / (flex1_high - flex1_low)
-
+  flex0 = 1 - (flex0 - flex0_low) / (flex0_high - flex0_low)
+  flex1 = 1 - (flex1 - flex1_low) / (flex1_high - flex1_low)
 
   m1 = flex0 / (flex0 + flex1)
   m2 = flex1 / (flex0 + flex1)
 
   turn =  m2 * 2 - 1
   speed = max([flex0, flex1])
-  return speed, turn
 
+  return speed, turn
 
 class Commander():
 
@@ -44,17 +43,18 @@ class Commander():
 
   def update(self, raw):
 
-    right_flex_0 = float(raw['right']['flex_0'])
-    right_flex_1 = float(raw['right']['flex_1'])
-    right_button = int(raw['right']['button'])
+    right_flex_0 = float(raw['sparks']['right']['flex_0'])
+    right_flex_1 = float(raw['sparks']['right']['flex_1'])
+    right_button = int(raw['sparks']['right']['button_0'])
 
     if right_button > 0:
-      speed, turn = speed_turn(flex0, flex1)
-      
+      speed, turn = speed_turn(right_flex_0, right_flex_1)
+
+      #print speed, turn      
       if speed < speed_threshold:
         return
 
-      self.commands = [variableDrive({ 'forwardBack': speed, 
+      self.commands = [VariableDrive({ 'forwardBack': speed, 
                                      'leftRight': turn })]
 
 commander = Commander()
