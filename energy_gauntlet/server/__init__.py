@@ -1,5 +1,6 @@
 import os
 from ..commander import commander
+from ..spark import sparks
 import tornado.web
 from socket.socket_handler import SocketHandler as ws
 from tornado.escape import json_encode
@@ -19,7 +20,7 @@ class CommandHandler(tornado.web.RequestHandler):
 class RawHandler(tornado.web.RequestHandler):
   def get(self):
     self.set_header('Content-Type', 'application/json')
-    self.write(json_encode(spark.get_raw()))
+    self.write(json_encode(sparks.raw))
 
 RawSocketHandler     = ws.new('RawSocketHandler')
 CommandSocketHandler = ws.new('CommandSocketHandler')

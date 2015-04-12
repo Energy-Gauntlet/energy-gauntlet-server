@@ -2,15 +2,49 @@
 <html>
 <head>
   <title>The Energy Gauntlet</title>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/css/style.css">
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.js"></script>
-  <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
 </head>
 <body>
-<pre class="block"><div class="header">Raw<span class="right">Socket Latency: <span class="latency">&#8734;</span>ms</span></div><div class="body" id="raw"></div></pre>
-  <pre class="half block right"><div class="header">Commands<span class="right">Socket Latency: <span class="latency">&#8734;</span>ms</span></div><div class="body" id="commands"></div></pre>
-  <pre class="half block error right"><div class="header">Errors</div><div class="body" id="error"></div></pre>
-  <script type="text/javascript" src="/js/script.js"></script>
+<nav class="navbar navbar-default navbar-static-top navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Energy Gauntlet</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="/dash.html">
+          API Status&nbsp;&nbsp;
+          <span id="api-status">
+            <i class="fa fa-question-circle unknown"></i>
+            <i class="fa fa-times-circle fail"></i>
+            <i class="fa fa-check-circle success"></i>
+          </span>
+        </a>
+      </li>
+      <li><a href="/docs.html">Developer Documentation</a></li>
+    </ul>
+  </div>
+</nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-push-2 col-xs-12">
+        <h1>Energy Gauntlet</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus commodo neque sed felis dictum porta sit amet vitae arcu. Quisque mattis eu est et gravida. Phasellus posuere leo velit, et aliquam quam iaculis quis. Nulla auctor nisl mauris. Etiam at sagittis nibh. Donec at mi odio. Maecenas vestibulum molestie nisl sed dapibus. Nunc dictum ornare est, id rhoncus augue aliquam sit amet. Praesent faucibus ullamcorper augue, a ullamcorper erat scelerisque in. Nam finibus quam et finibus accumsan. Nulla quis malesuada nisi. Fusce interdum pulvinar tempus. Nulla faucibus luctus enim ac bibendum.</p>
+
+        <p>Vivamus eu diam venenatis, vestibulum nulla nec, condimentum quam. Donec condimentum magna vitae lobortis pretium. Nunc dolor lacus, aliquam porttitor tristique ut, dictum eu erat. Nam et mauris aliquam, pretium ante ac, pharetra nisl. Maecenas eleifend interdum felis, sollicitudin venenatis magna ultrices ut. Donec erat quam, imperdiet eget vehicula sit amet, tincidunt sed turpis. Sed iaculis luctus lacus quis tincidunt.</p>
+
+        <h2>Source</h2>
+        <ul>
+          <li><a href="https://github.com/SpaceAppsCLE/energy-gauntlet-server">Server</a></li>
+          <li><a href="https://github.com/SpaceAppsCLE/energy-gauntlet-app">App</a></li>
+          <li><a href="https://github.com/SpaceAppsCLE/energy-gauntlet-drone-control">Drone Control System</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="/js/api.js"></script>
 </body>
 </html>

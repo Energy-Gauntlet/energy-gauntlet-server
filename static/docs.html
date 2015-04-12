@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Developer Docs The Energy Gauntlet</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-static-top navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Energy Gauntlet</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="/dash.html">
+          API Status&nbsp;&nbsp;
+          <span id="api-status">
+            <i class="fa fa-question-circle unknown"></i>
+            <i class="fa fa-times-circle fail"></i>
+            <i class="fa fa-check-circle success"></i>
+          </span>
+        </a>
+      </li>
+      <li><a href="/docs.html">Developer Documentation</a></li>
+    </ul>
+  </div>
+</nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-push-2 col-xs-12">
+        <h1>Energy Gauntlet API</h1>
+        <p>The Energy gauntlet data can be accessed via either <a href="#doc-http">http</a> and <a href="#doc-ws">web sockets</a>.</p>
+        <p>Both <strong>http</strong> and <strong>web sockets</strong> can access the <a href="raw">raw data</a> from the energy gloves and the <a href="commands">commands</a> for the <a href="http://www.doublerobotics.com/">Double Telepresence Robot</a>.</p>
+
+        <h2 id="doc-http">HTTP</h2>
+        <p>Data from the Energy Gauntlets can be retrieved at the urls:</p>
+        <ul>
+          <li><a href="/raw">Raw Data</a></li>
+          <li><a href="/what-should-i-do?">Command Data</a></li>
+        </ul>
+
+        <h2 id="doc-ws">Web Sockets</h2>
+        <p>Data from the Energy Gauntlets can also be streamed over web sockets at:</p>
+        <ul>
+          <li>ws://<span class="domain"></span>/ws/raw</li>
+          <li>ws://<span class="domain"></span>/ws/commands</li>
+        </ul>
+
+        <h2 id="doc-raw">Raw Data</h2>
+        <p>The raw data API returns the raw and unprocessed data directly from the sensors on the gloves.</p>
+
+        <h2 id="doc-commands">Double Telepresence Robot Commands</h2>
+        <p>There are 8 different commands for the Double Telepresence Robot.</p>
+        <ul>
+          <li>
+            drive
+            <ul>
+              <li><strong>Parameters</strong></li>
+              <li>forwardBack</li>
+              <li>leftRight</li>
+            </ul>
+          </li>
+          <li>
+            variableDrive
+            <ul>
+              <li><strong>Parameters</strong></li>
+              <li>forwardBack</li>
+              <li>leftRight</li>
+            </ul>
+          </li>
+          <li>
+            turnByDegrees
+            <ul>
+              <li><strong>Parameters</strong></li>
+              <li>theDegrees</li>
+            </ul>
+          </li>
+          <li>poleUp</li>
+          <li>poleDown</li>
+          <li>poleStop</li>
+          <li>deployKickstands</li>
+          <li>retractKickstands</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="/js/docs.js"></script>
+  <script type="text/javascript" src="/js/api.js"></script>
+</body>
+</html>

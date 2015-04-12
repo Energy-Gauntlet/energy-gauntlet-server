@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Developer Docs The Energy Gauntlet</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-static-top navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Energy Gauntlet</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="/dash.html">
+          API Status&nbsp;&nbsp;
+          <span id="api-status" class="status-indicator">
+            <i class="fa fa-question-circle unknown"></i>
+            <i class="fa fa-times-circle fail"></i>
+            <i class="fa fa-check-circle success"></i>
+          </span>
+        </a>
+      </li>
+      <li><a href="/docs.html">Developer Documentation</a></li>
+    </ul>
+  </div>
+</nav>
+  <div class="row">
+    <div class="col-md-5 col-md-push-1 dashlet">
+      <div class="header">Raw <span class="latency">Latency: <span class="latency-raw">&#8734;</span>ms</span></div>
+      <pre id="raw" class="real-time"></pre>
+    </div>
+    <div class="col-md-4 col-md-push-2 dashlet">
+      <div class="header">Commands</div>
+      <pre id="commands" class="real-time"></pre>
+    </div>
+  </div>
+  <br>
+  <div class="row" style="position:relative;top:-80px">
+    <div class="col-md-4 col-md-push-7 dashlet">
+      <div class="header">
+        <div class="row">
+          <div class="col-sm-6">
+            HTTP Status:
+            <span id="http-status" class="status-indicator" style="float:right">
+              <i class="fa fa-question-circle unknown"></i>
+              <i class="fa fa-times-circle fail"></i>
+              <i class="fa fa-check-circle success"></i>
+            </span>
+          </div>
+          <div class="col-sm-6">
+            Socket Status:
+            <span id="socket-status" class="status-indicator" style="float:right">
+              <i class="fa fa-question-circle unknown"></i>
+              <i class="fa fa-times-circle fail"></i>
+              <i class="fa fa-check-circle success"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="/js/docs.js"></script>
+  <script type="text/javascript" src="/js/api.js"></script>
+</body>
+</html>
