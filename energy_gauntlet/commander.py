@@ -42,7 +42,7 @@ class Commander():
     self.commands = []
 
   def update(self, raw):
-
+    self.commands = []
     right_flex_0 = float(raw['sparks']['right']['flex_0'])
     right_flex_1 = float(raw['sparks']['right']['flex_1'])
     right_button = int(raw['sparks']['right']['button_0'])
