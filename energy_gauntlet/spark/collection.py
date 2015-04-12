@@ -21,7 +21,7 @@ class Collection:
     threads = []
     latency = int(round(time() * 1000))
     for spark in self.connected_sparks():
-      threads.append(spark.update)
+      threads.append(spark.update())
     for thread in threads:
       thread.join()
     latency  = int(round(time() * 1000)) - latency

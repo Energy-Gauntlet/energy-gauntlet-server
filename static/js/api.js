@@ -8,26 +8,39 @@ var makeWsListener = function(path, selector) {
   var ws = new WebSocket('ws://' + location.host + path);
 
   var last = 0;
-  var diff = 0;
 
   var status = undefined;
 
-  ws.onmessage = function(event) {
-    var now  = window.performance.now();
+  var messageHandler = function(event) {
+    var now  = Date.now();
     var data = JSON.parse(event.data);
-    diff     = now - last - (data.interval || 0  + data.latency || 0);
+    var diff = ((now - last) + data.latency);
     last     = now;
     var str  = JSON.stringify(data, undefined, 2);
     $(selector).text(str);
-    $('.latency' + selector.replace('#', '-')).text(diff.toFixed(2));
+    $('.latency' + selector.replace('#', '-')).text(diff.toFixed());
     status = true;
   };
 
-  ws.onerror = function(event) {
+  var erorrHandler = function(event) {
     var str = JSON.stringify(JSON.parse(event.data), undefined, 2);
     $('#error').text(str);
     status = false;
-  }
+  };
+
+  var closeHandler = function(event) {
+    createWs();
+    status = false;
+  };
+
+  function createWs() {
+    ws = new WebSocket('ws://' + location.host + path);
+    ws.onmessage = messageHandler;
+    ws.onerror   = erorrHandler;
+    ws.onclose   = closeHandler;
+  };
+
+  createWs();
 
   var listener = {
     status: function() { return status; },
@@ -57,13 +70,11 @@ var makeHttpListener = function(path) {
       url: path,
       success: function(res) {
         status = true;
-        setTimeout(loop, 200);
+        setTimeout(loop, 5000);
       },
       error: function(res) {
-        var str = JSON.stringify(JSON.parse(res), undefined, 2);
-        $('#error').text(str);
         status = false;
-        setTimeout(loop, 200);
+        setTimeout(loop, 5000);
       }
     })
   })();

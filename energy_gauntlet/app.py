@@ -6,10 +6,10 @@ from spark import Collection, Spark, sparks
 from commands import *
 from commander import commander
 
-devices = os.getenv('DEVICES', '').split(',')
-for device in devices:
-  token = os.getenv(device.upper() + '_TOKEN', '')
-  sparks.add_spark(Spark(token, device))
+from spyrk import SparkCloud
+connection = SparkCloud(os.getenv('TOKEN', ''))
+for deviceId in connection.devices:
+  sparks.add_spark(Spark(connection, deviceId))
 
 def send_commands(raw):
   commander.update(raw)

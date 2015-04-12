@@ -3,12 +3,12 @@ import threading
 
 class Spark:
 
-  def __init__(self, token, deviceId):
+  def __init__(self, connection, deviceId):
     self.on_update_listeners = set()
     self.raw        = {}
-    self.token      = token
     self.device     = None
     self.id         = deviceId
+    self.connection = connection
     self.connect()
 
   def get_raw(self):
@@ -25,14 +25,12 @@ class Spark:
       return False
 
   def update(self):
-    threading.Thread(target=self._update)
+    thread = threading.Thread(target=self._update)
+    thread.start()
+    return thread
 
   def connect(self):
-    threading.Thread(target=self._connect)
-
-  def _connect(self):
-    self.connection = SparkCloud(self.token)
-    self.device     = self.connection.devices[self.id]
+    self.device = self.connection.devices[self.id]
 
   def _update(self):
     try:
