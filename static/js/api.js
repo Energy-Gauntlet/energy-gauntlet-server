@@ -5,7 +5,7 @@ var listeners = [];
 //
 
 var makeWsListener = function(path, selector) {
-  var ws = new WebSocket('ws://' + location.host + path);
+  var ws;
 
   var last = 0;
 

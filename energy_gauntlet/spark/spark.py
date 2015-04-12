@@ -1,7 +1,8 @@
 from spyrk import SparkCloud
+from urlparse import parse_qs
 import threading
 
-class Spark:
+class Spark():
 
   def __init__(self, connection, deviceId):
     self.on_update_listeners = set()

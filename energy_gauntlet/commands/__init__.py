@@ -18,3 +18,5 @@ PoleStop      = factory('poleStop')
 
 DeployKickstands  = factory('deployKickstands')
 RetractKickstands = factory('retractKickstands')
+
+Speak = factory('speak', { 'string': '' })
