@@ -35,6 +35,11 @@ html, body {
   background: #1a1a1a;
 }
 
+.header > span {
+  position: relative;
+  top: -17px;
+}
+
 .body {
   padding: 10px 20px 20px 20px;
 }
