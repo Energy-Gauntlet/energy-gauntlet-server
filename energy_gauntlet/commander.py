@@ -44,19 +44,21 @@ class Commander():
   def update(self, raw):
     self.commands = [VariableDrive({ 'forwardBack': 0.0, 
                                      'leftRight': 0.0 })]
-    
+
     right_flex_0 = float(raw['sparks']['right']['flex_0'])
     right_flex_1 = float(raw['sparks']['right']['flex_1'])
     right_button = int(raw['sparks']['right']['button_0'])
 
+    
+    speed, turn = speed_turn(right_flex_0, right_flex_1)
+
+    #print speed, turn      
+    if speed < speed_threshold:
+      return
+
     if right_button > 0:
-      speed, turn = speed_turn(right_flex_0, right_flex_1)
-
-      #print speed, turn      
-      if speed < speed_threshold:
-        return
-
-      self.commands = [VariableDrive({ 'forwardBack': speed, 
-                                     'leftRight': turn })]
+      speed = - speed
+    self.commands = [VariableDrive({ 'forwardBack': speed, 
+                                   'leftRight': turn })]
 
 commander = Commander()
