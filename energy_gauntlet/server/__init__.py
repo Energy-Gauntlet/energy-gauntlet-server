@@ -1,7 +1,5 @@
 import os
-from ..spark import sparks
-from ..commands import *
-import time
+from ..commander import commander
 import tornado.web
 from socket.socket_handler import SocketHandler as ws
 from tornado.escape import json_encode
@@ -16,7 +14,7 @@ class IndexHandler(tornado.web.RequestHandler):
 class CommandHandler(tornado.web.RequestHandler):
   def get(self):
     self.set_header('Content-Type', 'application/json')
-    self.write(json_encode(commands))
+    self.write(json_encode(commander.commands))
 
 class RawHandler(tornado.web.RequestHandler):
   def get(self):
@@ -25,22 +23,6 @@ class RawHandler(tornado.web.RequestHandler):
 
 RawSocketHandler     = ws.new('RawSocketHandler')
 CommandSocketHandler = ws.new('CommandSocketHandler')
-
-def testing_commands_generator():
-  return [
-    [
-      PoleUp(),
-      PoleStop(),
-      PoleDown(),
-      PoleStop()
-    ][(int(time.time()) % 8) / 2]
-  ]
-
-def get_commands(raw):
-  global commands
-  commands = testing_commands_generator()
-
-sparks.on_update(get_commands)
 
 handlers = [
   (r"/",                 IndexHandler),
