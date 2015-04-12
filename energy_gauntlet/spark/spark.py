@@ -34,11 +34,18 @@ class Spark():
     self.device = self.connection.devices[self.id]
 
   def _update(self):
+    self.raw = {}
     try:
-      d = {}
+      threads = []
       for k in self.device.variables.keys():
-        d[k] = getattr(self.device, k)
-      self.raw = d
+        thread = threading.Thread(target=self._set_raw_for(k))
+        thread.start()
+        threads.append(thread)
+      for thread in threads:
+        thread.join()
     except Exception:
       self.device = None # assume disconnected
-      self.raw = {}
+      self.raw    = {}
+
+  def _set_raw_for(self, key):
+    self.raw[key] = getattr(self.device, key)
