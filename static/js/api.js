@@ -11,7 +11,7 @@ var makeWsListener = function(path, selector) {
 
   var status = undefined;
 
-  ws.onmessage = function(event) {
+  var messageHandler = function(event) {
     var now  = Date.now();
     var data = JSON.parse(event.data);
     var diff = ((now - last) + data.latency);
@@ -22,11 +22,25 @@ var makeWsListener = function(path, selector) {
     status = true;
   };
 
-  ws.onerror = function(event) {
+  var erorrHandler = function(event) {
     var str = JSON.stringify(JSON.parse(event.data), undefined, 2);
     $('#error').text(str);
     status = false;
-  }
+  };
+
+  var closeHandler = function(event) {
+    createWs();
+    status = false;
+  };
+
+  function createWs() {
+    ws = new WebSocket('ws://' + location.host + path);
+    ws.onmessage = messageHandler;
+    ws.onerror   = erorrHandler;
+    ws.onclose   = closeHandler;
+  };
+
+  createWs();
 
   var listener = {
     status: function() { return status; },
@@ -59,8 +73,6 @@ var makeHttpListener = function(path) {
         setTimeout(loop, 5000);
       },
       error: function(res) {
-        var str = JSON.stringify(JSON.parse(res), undefined, 2);
-        $('#error').text(str);
         status = false;
         setTimeout(loop, 5000);
       }
