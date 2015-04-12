@@ -7,9 +7,9 @@ from commands import *
 
 sparks = Collection(0.2)
 
-devices = os.getenv('DEVICES').split(',')
+devices = os.getenv('DEVICES', '').split(',')
 for device in devices:
-  token = os.getenv(device.upper() + '_TOKEN')
+  token = os.getenv(device.upper() + '_TOKEN', '')
   sparks.add_spark(Spark(token, device))
 
 def testing_commands_generator():
