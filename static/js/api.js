@@ -15,8 +15,11 @@ var makeWsListener = function(path, selector) {
   ws.onmessage = function(event) {
     var now  = window.performance.now();
     var data = JSON.parse(event.data);
-    diff     = now - last - (data.interval || 0  + data.latency || 0);
+    diff     = (data.latency || 0) + now - last - (data.interval || 0);
     last     = now;
+    if (diff < 0) {
+      console.log(diff, last, data.interval, data.latency)
+    }
     var str  = JSON.stringify(data, undefined, 2);
     $(selector).text(str);
     $('.latency' + selector.replace('#', '-')).text(diff.toFixed(2));
@@ -57,13 +60,13 @@ var makeHttpListener = function(path) {
       url: path,
       success: function(res) {
         status = true;
-        setTimeout(loop, 200);
+        setTimeout(loop, 5000);
       },
       error: function(res) {
         var str = JSON.stringify(JSON.parse(res), undefined, 2);
         $('#error').text(str);
         status = false;
-        setTimeout(loop, 200);
+        setTimeout(loop, 5000);
       }
     })
   })();
