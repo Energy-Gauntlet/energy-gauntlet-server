@@ -53,13 +53,13 @@ var makeWsListener = function(path, selector) {
 };
 
 var wsRaw      = makeWsListener('/ws/raw', '#raw');
-var wsCommands = makeWsListener('/ws/commands', '#commands');
+// var wsCommands = makeWsListener('/ws/commands', '#commands');
 
 //
 // function to create http listeners
 //
 
-var makeHttpListener = function(path) {
+var makeHttpListener = function(path, selector) {
   var last = 0;
   var diff = 0;
 
@@ -70,11 +70,12 @@ var makeHttpListener = function(path) {
       url: path,
       success: function(res) {
         status = true;
-        setTimeout(loop, 5000);
+        if (selector) { $(selector).text(JSON.stringify(res, undefined, 2)); }
+        setTimeout(loop, 200);
       },
       error: function(res) {
         status = false;
-        setTimeout(loop, 5000);
+        setTimeout(loop, 200);
       }
     })
   })();
@@ -90,7 +91,7 @@ var makeHttpListener = function(path) {
 };
 
 var httpRaw      = makeHttpListener('/raw');
-var httpCommands = makeHttpListener('/what-should-i-do?');
+var httpCommands = makeHttpListener('/what-should-i-do?', '#commands');
 
 var updateIndicator = function(id, failed, unknown) {
   document.getElementById(id).className = 'status-indicator';

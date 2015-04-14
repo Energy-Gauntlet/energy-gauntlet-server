@@ -1,5 +1,6 @@
 import time
 from commands import *
+import threading
 
 speed_threshold = 0.25
 
@@ -39,7 +40,19 @@ def speed_turn(flex0, flex1):
 class Commander():
 
   def __init__(self):
-    self.commands = []
+    self.commands         = []
+    self._commands_to_add = []
+
+  def say(self, text):
+    self._commands_to_add.append(Speak({ 'string': text }))
+
+  def clear_additional_commands(self):
+    self._commands_to_add = []
+
+  def get_commands(self):
+    cmds = self.commands + self._commands_to_add
+    threading.Timer(0.2, self.clear_additional_commands).start();
+    return cmds
 
   def update(self, raw):
     if not ('right' in raw['sparks'] and 'connected' in raw['sparks']['right']):
@@ -62,6 +75,7 @@ class Commander():
           speed = - speed
         self.commands = [VariableDrive({ 'forwardBack': speed,
                                        'leftRight': turn })]
+
       except:
         pass
 

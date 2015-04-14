@@ -12,16 +12,14 @@ from spyrk import SparkCloud
 def populate_devices():
   token      = os.getenv('TOKEN', '')
   connection = SparkCloud(token)
-  print 'connected to ' + token
   for deviceId in connection.devices:
-    print 'added ' + deviceId
     sparks.add_spark(Spark(connection, deviceId))
 
 threading.Thread(target=populate_devices).start()
 
 def send_commands(raw):
   commander.update(raw)
-  CommandSocketHandler.send(commander.commands)
+  # CommandSocketHandler.send(commander.commands)
 
 sparks.on_update(RawSocketHandler.send)
 sparks.on_update(send_commands)
