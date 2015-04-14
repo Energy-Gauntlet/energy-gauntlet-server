@@ -10,7 +10,8 @@ import threading
 from spyrk import SparkCloud
 
 def populate_devices():
-  connection = SparkCloud(os.getenv('TOKEN', ''))
+  token      = os.getenv('TOKEN', '')
+  connection = SparkCloud(token)
   for deviceId in connection.devices:
     sparks.add_spark(Spark(connection, deviceId))
 
