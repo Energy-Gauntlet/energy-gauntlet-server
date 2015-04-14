@@ -5,11 +5,16 @@ from server import handlers, RawSocketHandler, CommandSocketHandler
 from spark import Collection, Spark, sparks
 from commands import *
 from commander import commander
+import threading
 
 from spyrk import SparkCloud
-connection = SparkCloud(os.getenv('TOKEN', ''))
-for deviceId in connection.devices:
-  sparks.add_spark(Spark(connection, deviceId))
+
+def populate_devices():
+  connection = SparkCloud(os.getenv('TOKEN', ''))
+  for deviceId in connection.devices:
+    sparks.add_spark(Spark(connection, deviceId))
+
+threading.Thread(target=populate_devices).start()
 
 def send_commands(raw):
   commander.update(raw)

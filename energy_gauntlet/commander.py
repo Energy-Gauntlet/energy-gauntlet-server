@@ -42,7 +42,7 @@ class Commander():
     self.commands = []
 
   def update(self, raw):
-    if not 'connected' in raw['sparks']['right']:
+    if not ('right' in raw['sparks'] and 'connected' in raw['sparks']['right']):
       self.commands = [VariableDrive({ 'forwardBack': 0.0,
                                        'leftRight': 0.0 })]
 
@@ -51,7 +51,7 @@ class Commander():
         right_flex_1 = float(raw['sparks']['right']['flex_1'])
         right_button = int(raw['sparks']['right']['button_0'])
 
-        
+
         speed, turn = speed_turn(right_flex_0, right_flex_1)
 
         #print speed, turn
