@@ -51,7 +51,7 @@ class Commander():
 
   def get_commands(self):
     cmds = self.commands + self._commands_to_add
-    threading.Timer(0.2, self.clear_additional_commands).start();
+    threading.Timer(1, self.clear_additional_commands).start();
     return cmds
 
   def update(self, raw):
