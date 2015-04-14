@@ -58,18 +58,19 @@ class Spark():
       pass
 
   def _update(self):
-    self._raw = {}
-    try:
-      threads = []
-      for k in self._var_keys:
-        thread = threading.Thread(target=self._set_raw_for(k))
-        thread.start()
-        threads.append(thread)
-      for thread in threads:
-        thread.join()
-    except Exception:
-      self._device = None # assume disconnected
-      self._raw    = {}
+    if self.connected():
+      self._raw = {}
+      try:
+        threads = []
+        for key in self._var_keys:
+          thread = threading.Thread(target=self._set_raw_for, args=(key,))
+          thread.start()
+          threads.append(thread)
+        for thread in threads:
+          thread.join()
+      except Exception:
+        self._device = None # assume disconnected
+        self._raw    = {}
 
   def _set_raw_for(self, key):
     self._raw[key] = getattr(self._device, key)
