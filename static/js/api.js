@@ -14,7 +14,7 @@ var makeWsListener = function(path, selector) {
   var messageHandler = function(event) {
     var now  = Date.now();
     var data = JSON.parse(event.data);
-    var diff = ((now - last) + data.latency);
+    var diff = now - last;
     last     = now;
     var str  = JSON.stringify(data, undefined, 2);
     $(selector).text(str);
