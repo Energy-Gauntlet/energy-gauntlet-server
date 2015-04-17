@@ -73,4 +73,5 @@ class Spark():
         self._raw    = {}
 
   def _set_raw_for(self, key):
-    self._raw[key] = getattr(self._device, key)
+    if key != 'error_description':
+      self._raw[key] = getattr(self._device, key)
