@@ -1,6 +1,7 @@
 from command import Command
 
 def factory(cmd_type, params = {}):
+  """Used to define command classes at run time."""
   def __init__(self, new_params = {}):
     params.update(new_params)
     Command.__init__(self, cmd_type, params)

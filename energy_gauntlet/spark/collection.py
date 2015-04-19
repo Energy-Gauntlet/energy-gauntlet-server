@@ -2,6 +2,9 @@ from time import time
 import threading
 
 class Collection:
+  """This class represents a collection of sparks.  It coordinates the updating
+  of the sparks and triggers an event when all sparks have been updated.
+  """
 
   def __init__(self, interval = 0):
     self._sparks_access = threading.Lock()
@@ -39,4 +42,5 @@ class Collection:
       threading.Timer(self.interval, self._update_loop).start()
 
   def on_update(self, listener):
+    """Add a listener to be fired when all of the sparks are updated."""
     self._listeners.append(listener)

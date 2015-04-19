@@ -3,6 +3,8 @@ from urlparse import parse_qs
 import threading
 
 class Spark():
+  """Wrapper class for a spark core device."""
+
   update_keys_interval = 10
 
   def __init__(self, connection, deviceId):
@@ -23,30 +25,42 @@ class Spark():
     self._update_var_keys_loop()
 
   def get_raw(self):
+    """If this spark is connected then this method will return the raw data from
+    the spark's sensors.  Otherwise it will return { 'connected': False }."""
     if self.connected():
       return self._raw
     else:
       return { 'connected': False }
 
   def connected(self):
+    """Returns True if the device represented by this object is connected.  If
+    the device is not connected it will check to see if the device is actually
+    connected.  This check happens a maximum of every 10 seconds.
+    """
     if self._device and self._device.connected:
       return True
     else:
       if not self._connecting:
-        threading.Thread(target=self.connect).start()
+        self._connecting = True
+        threading.Timer(10, self.connect).start()
       self._device = None
       return False
 
   def update(self):
+    """Spawns a thread to retrieve the values from this spark's sensors."""
     thread = threading.Thread(target=self._update)
     thread.start()
     return thread
 
   def connect(self):
+    """Checks the spark cloud API to see if this device is connected."""
     self._device     = self.connection.devices[self.id]
     self._connecting = False
 
   def _update_var_keys_loop(self):
+    """The variables for a given core are cached.  This method updates this
+    cache.
+    """
     if self.connected():
       threading.Thread(target=self._update_var_keys).start()
     threading.Timer(self.__class__.update_keys_interval, self._update_var_keys_loop).start()
@@ -58,6 +72,8 @@ class Spark():
       pass
 
   def _update(self):
+    """Reads the data from the spark core.  The values can be retrieved via the
+    get_raw method."""
     if self.connected():
       self._raw = {}
       try:

@@ -38,6 +38,9 @@ def speed_turn(flex0, flex1):
   return speed, turn
 
 class Commander():
+  """The Commander class takes raw input from the sparks and creates an array of
+  commands for the Double to perform.
+  """
 
   def __init__(self):
     self.commands         = []
@@ -50,11 +53,18 @@ class Commander():
     self._commands_to_add = []
 
   def get_commands(self):
+    """Returns the current set of commands the commander wants to give the
+    double at this time.
+    """
     cmds = self.commands + self._commands_to_add
     threading.Timer(1, self.clear_additional_commands).start();
     return cmds
 
   def update(self, raw):
+    """Takes raw data from sparks and sets a commands instance variable to an
+    array of command objects which will later be sent to the double robot to
+    perform.
+    """
     if not ('right' in raw['sparks'] and 'connected' in raw['sparks']['right']):
       self.commands = [VariableDrive({ 'forwardBack': 0.0,
                                        'leftRight': 0.0 })]
@@ -75,7 +85,6 @@ class Commander():
           speed = - speed
         self.commands = [VariableDrive({ 'forwardBack': speed,
                                        'leftRight': turn })]
-
       except:
         pass
 
